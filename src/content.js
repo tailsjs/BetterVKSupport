@@ -86,7 +86,7 @@ function cyberbulling2(){
         if(agentPic.includes("ava=1")) {
             continue;
         }
-        console.log(question.children[0].children[0].src)
+
         question.children[0].children[0].src = getRandomElement(agentAvatars)
         question.children[1].textContent = getRandomElement(agentNicknames)
     }

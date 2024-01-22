@@ -1,4 +1,4 @@
-console.log("BetterVKSupport v1.0 by tailsjs!")
+console.log("BetterVKSupport v1.1 by tailsjs!")
 
 function cyberbulling(){
     if (!window.location.href.includes("act=")) return cyberbulling2();
@@ -32,12 +32,32 @@ function cyberbulling(){
             .children[2]
 
         if (agentRateFunction) {
+            const clonedAnswer = agentRateFunction.cloneNode(true)
+            const divider = document.createElement('span')
+
+            divider.classList.add("divider")
+
+            clonedAnswer.textContent = "да вы ахуели чтоли"
+
+            clonedAnswer.setAttribute("onclick", `const textarea = document.getElementById("tickets_reply")
+            
+            if(!textarea.value.includes("да вы ахуели чтоли")) {
+                textarea.value += "да вы ахуели чтоли"
+            } else {
+                alert("Я думаю они там реально ахуели")
+            }
+            
+            return;`)
+
+            document.getElementsByClassName("tickets_reply_actions__list")[childrenIndex].children[0].appendChild(divider)
+            document.getElementsByClassName("tickets_reply_actions__list")[childrenIndex].children[0].appendChild(clonedAnswer)
+
             agentRateFunction = parseFunction(agentRateFunction.outerHTML)
             rateAnswers.push([agentRateFunction.split("Tickets.rateComment(")[1].replace(")", "").split(",")])
         }
 
         children.src = agentAvatars[agentId % agentAvatars.length]
-        children.parentElement.parentElement.children[1].children[0].textContent = agentNicknames[agentId % agentNicknames.length]
+        children.parentElement.parentElement.children[1].children[0].children[0].textContent = agentNicknames[agentId % agentNicknames.length]
     }
 
     if (rateAnswers.length != 0) {

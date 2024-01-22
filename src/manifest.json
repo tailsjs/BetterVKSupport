@@ -1,7 +1,7 @@
 {
     "name": "BetterVKSupport",
     "description": "Улучшаем ваш опыт общения с технической поддержкой ВКонтакте без проблем и мозолей!",
-    "version": "1.0",
+    "version": "1.1",
     "manifest_version": 3,
   
     "action": {

@@ -1,0 +1,34 @@
+{
+    "name": "BetterVKSupport",
+    "description": "Улучшаем ваш опыт общения с технической поддержкой ВКонтакте без проблем и мозолей!",
+    "version": "1.0",
+    "manifest_version": 3,
+  
+    "action": {
+      "default_icon": {
+        "16": "/images/icon16.png",
+        "32": "/images/icon32.png",
+        "48": "/images/icon48.png",
+        "128": "/images/icon128.png"
+      }
+    },
+    "icons": {
+      "16": "/images/icon16.png",
+      "32": "/images/icon32.png",
+      "48": "/images/icon48.png",
+      "128": "/images/icon128.png"
+    },
+    "host_permissions": [
+        "https://vk.com/*"
+    ],
+    "permissions": ["contextMenus", "tabs", "scripting"],
+    "background": {
+      "service_worker": "background.js"
+    },
+    "content_scripts": [
+        {
+          "matches": ["https://vk.com/*"],
+          "js": ["content.js"]
+        }
+      ]
+  }

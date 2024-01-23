@@ -1,0 +1,33 @@
+{
+    "currentVersion": "1.2",
+    "baseDatabaseUri": "https://raw.githubusercontent.com/tailsjs/BetterVKSupport/database",
+    "nicknames": [
+        "Сиделый",
+        "Петух",
+        "Уёбок",
+        "Мутный", 
+        "Хитрый", 
+        "Скользкий", 
+        "Проблема", 
+        "Геморрой",
+        "Хмурый", 
+        "Злой", 
+        "Угрюмый", 
+        "Беда", 
+        "Пика", 
+        "Волына",
+        "Арестант",
+        "Бес",
+        "Бродяга",
+        "Дьявол",
+        "Автоматчик",
+        "Заключенный"
+    ],
+    "avatars": [
+        "images/1.jpg",
+        "images/2.jpg",
+        "images/3.jpg",
+        "images/4.png",
+        "images/5.jpg"
+    ]
+}

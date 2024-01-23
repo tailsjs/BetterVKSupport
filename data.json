@@ -1,6 +1,6 @@
 {
     "currentVersion": "1.2",
-    "baseDatabaseUri": "https://raw.githubusercontent.com/tailsjs/BetterVKSupport/database",
+    "baseDatabaseUri": "https://raw.githubusercontent.com/tailsjs/BetterVKSupport/database/",
     "nicknames": [
         "Сиделый",
         "Петух",

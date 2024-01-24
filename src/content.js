@@ -126,6 +126,8 @@ async function cyberbulling2(){
             continue;
         }
 
+        question.children[0].children[0].classList.add("tickets_image__i")
+
         question.children[0].children[0].src = isAdblockerDetected ? getRandomElement(extensionData.reserveAvatars) : extensionData.baseDatabaseUri + getRandomElement(agentAvatars)
         question.children[1].textContent = getRandomElement(agentNicknames)
     }
@@ -133,13 +135,13 @@ async function cyberbulling2(){
     const ticketsList = document.getElementsByClassName("tickets_list")
 
     if (ticketsList.length != 0) {
-        const observer = new MutationObserver(function(mutations) {
-            cyberbulling2();
+        const observer = new MutationObserver(async function(mutations) {
+            await cyberbulling2();
         });
 
         const config = { attributes: true, childList: true, characterData: true }
 
-        observer.observe(ticketsList, config);
+        observer.observe(ticketsList[0], config);
     }
 }
 

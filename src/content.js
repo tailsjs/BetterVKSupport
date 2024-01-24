@@ -5,7 +5,7 @@ async function setUpdatedExtensionData() {
     
     extensionData = result.BetterVKSupportData
 
-    if (extensionData.versionNumber != 3) {
+    if (extensionData.versionNumber != 4) {
         alert(`Для нормальной работы расширения BetterVKSupport обновите расширение! Актуальная версия: ${extensionData.currentVersion}, в то время как ваша версия - 1.2`)
     }
 }

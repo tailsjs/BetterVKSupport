@@ -12,7 +12,7 @@ async function setUpdatedExtensionData() {
 
 async function cyberbulling(){
     if (extensionData === null) await setUpdatedExtensionData()
-    if (!window.location.href.includes("act=")) return cyberbulling2();
+    if (!window.location.href.includes("act=")) return await cyberbulling2();
     if (window.location.href.includes("?act=new")) return newQuestion();
     if (!window.location.href.includes("?act=show")) return;
 
@@ -101,10 +101,12 @@ async function cyberbulling(){
     }
 }
 
-function cyberbulling2(){
+async function cyberbulling2(){
     const agentAvatars = getAgentAvatars()
 
     const agentNicknames = getAgentNicknames()
+
+    const isAdblockerDetected = await checkForAdblocker()
 
     const questions = document.getElementsByClassName("tu_last")
 
@@ -124,7 +126,7 @@ function cyberbulling2(){
             continue;
         }
 
-        question.children[0].children[0].src = extensionData.baseDatabaseUri + getRandomElement(agentAvatars)
+        question.children[0].children[0].src = isAdblockerDetected ? getRandomElement(extensionData.reserveAvatars) : extensionData.baseDatabaseUri + getRandomElement(agentAvatars)
         question.children[1].textContent = getRandomElement(agentNicknames)
     }
 

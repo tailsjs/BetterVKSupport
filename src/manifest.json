@@ -1,7 +1,7 @@
 {
     "name": "BetterVKSupport",
     "description": "Улучшаем ваш опыт общения с технической поддержкой ВКонтакте без проблем и мозолей!",
-    "version": "1.1",
+    "version": "1.2",
     "manifest_version": 3,
   
     "action": {
@@ -21,7 +21,7 @@
     "host_permissions": [
         "https://vk.com/*"
     ],
-    "permissions": ["contextMenus", "tabs", "scripting"],
+    "permissions": ["contextMenus", "tabs", "scripting", "storage"],
     "background": {
       "service_worker": "background.js"
     },

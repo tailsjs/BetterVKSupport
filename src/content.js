@@ -1,8 +1,22 @@
-console.log("BetterVKSupport v1.1 by tailsjs!")
+extensionData = null
 
-function cyberbulling(){
+async function setUpdatedExtensionData() {
+    const result = await chrome.storage.local.get("BetterVKSupportData")
+    
+    extensionData = result.BetterVKSupportData
+
+    if (extensionData.versionNumber != 3) {
+        alert(`Для нормальной работы расширения BetterVKSupport обновите расширение! Актуальная версия: ${extensionData.currentVersion}, в то время как ваша версия - 1.2`)
+    }
+}
+
+async function cyberbulling(){
+    if (extensionData === null) await setUpdatedExtensionData()
     if (!window.location.href.includes("act=")) return cyberbulling2();
+    if (window.location.href.includes("?act=new")) return newQuestion();
     if (!window.location.href.includes("?act=show")) return;
+
+    logExtensionInfo()
 
     const agentAvatars = getAgentAvatars()
 
@@ -10,6 +24,8 @@ function cyberbulling(){
     
     const ticketDOMs = document.getElementsByClassName("tickets_image__i")
     const buttonsDOM = document.getElementsByClassName("tickets_envelope_controls")[0].children[1]
+
+    const isAdblockerDetected = await checkForAdblocker()
 
     const rateAnswers = []
 
@@ -44,7 +60,7 @@ function cyberbulling(){
             if(!textarea.value.includes("да вы ахуели чтоли")) {
                 textarea.value += "да вы ахуели чтоли"
             } else {
-                alert("Я думаю они там реально ахуели")
+                alert("Я думаю они там реально ахуели чтоли")
             }
             
             return;`)
@@ -56,7 +72,7 @@ function cyberbulling(){
             rateAnswers.push([agentRateFunction.split("Tickets.rateComment(")[1].replace(")", "").split(",")])
         }
 
-        children.src = agentAvatars[agentId % agentAvatars.length]
+        children.src = isAdblockerDetected ? extensionData.reserveAvatars[agentId % extensionData.reserveAvatars.length] : extensionData.baseDatabaseUri + agentAvatars[agentId % agentAvatars.length]
         children.parentElement.parentElement.children[1].children[0].children[0].textContent = agentNicknames[agentId % agentNicknames.length]
     }
 
@@ -65,8 +81,7 @@ function cyberbulling(){
 
         clonedButton.textContent = "Агент Поддержки, иди нахуй!"
 
-        clonedButton.setAttribute("onclick", `
-        let answers = [ ${rateAnswers.map(e => '[' + e + ']').join(", ")} ]
+        clonedButton.setAttribute("onclick", `let answers = [ ${rateAnswers.map(e => '[' + e + ']').join(", ")} ]
 
         function sleep(ms) {
             return new Promise(resolve => setTimeout(resolve, ms));
@@ -93,6 +108,8 @@ function cyberbulling2(){
 
     const questions = document.getElementsByClassName("tu_last")
 
+    logExtensionInfo()
+
     for(let questionIndex in questions) {
         const question = questions[questionIndex]
 
@@ -107,17 +124,42 @@ function cyberbulling2(){
             continue;
         }
 
-        question.children[0].children[0].src = getRandomElement(agentAvatars)
+        question.children[0].children[0].src = extensionData.baseDatabaseUri + getRandomElement(agentAvatars)
         question.children[1].textContent = getRandomElement(agentNicknames)
     }
 
-    const observer = new MutationObserver(function(mutations) {
-        cyberbulling2();
-    });
+    const ticketsList = document.getElementsByClassName("tickets_list")
 
-    const config = { attributes: true, childList: true, characterData: true }
+    if (ticketsList.length != 0) {
+        const observer = new MutationObserver(function(mutations) {
+            cyberbulling2();
+        });
 
-    observer.observe(document.getElementById("tickets_list"), config);
+        const config = { attributes: true, childList: true, characterData: true }
+
+        observer.observe(ticketsList, config);
+    }
+}
+
+async function checkForAdblocker() {
+    try{
+        await fetch("https://raw.githubusercontent.com/tailsjs/BetterVKSupport/images/1.jpg")
+    } catch(e) {
+        return true
+    }
+
+    return false
+}
+
+function newQuestion() {
+    const ticketsTitle = document.getElementById("tickets_title")
+    const ticketsText = document.getElementById("tickets_text")
+    const ticketsTitleLabel = document.getElementsByClassName("tickets_title_label")[0]
+    
+
+    ticketsTitle.placeholder = "Опишите вашу проблему так, чтобы мы точно всё поняли."
+    ticketsText.placeholder = "Че бы вы тут не нахуярили, мы сделаем вид, что мы всё поняли. Возможно мы вам поможем."
+    ticketsTitleLabel.textContent = "Удачи)0))"
 }
 
 cyberbulling()
@@ -130,40 +172,16 @@ function getLastElement(array) {
     return array[array.length - 1]
 }
 
+function logExtensionInfo() {
+    console.log("BetterVKSupport v1.2 by tailsjs")
+}
+
 function getAgentAvatars() {
-    return [
-        "https://www.meme-arsenal.com/memes/5a8286009c186bbbb15c211c0dabfdb0.jpg",
-        "https://cdn.shazoo.ru/556218_2LwhiuLI6o_388d088326ee1064135a61ae33889a8a.jpg",
-        "https://www.meme-arsenal.com/memes/bf32b678fa17571d7945dc4ea1dcdb01.jpg",
-        "https://www.meme-arsenal.com/memes/01895223fbd8653cd5affa09871cfb8f.jpg",
-        "https://i.playground.ru/p/P8yhpZqQ47nJPI--nPXBBg.png",
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbUHL-Mn6PGOt_Krh-abMX6QvqKd8VOxI3eD5LAnlaAAl6SffUeyr2jarT4fsl3-RBcZM&usqp=CAU" // change later
-    ]
+    return extensionData.avatars
 }
 
 function getAgentNicknames() {
-    return [
-        "Сиделый",
-        "Петух",
-        "Уёбок",
-        'Мутный', 
-        'Хитрый', 
-        'Скользкий', 
-        'Проблема', 
-        'Геморрой',
-        'Хмурый', 
-        'Злой', 
-        'Угрюмый', 
-        'Беда', 
-        'Пика', 
-        'Волына',
-        "Арестант",
-        "Бес",
-        "Бродяга",
-        "Дьявол",
-        "Автоматчик",
-        "Заключенный"
-    ]
+    return extensionData.nicknames
 }
 
 function getRandomElement(array) {

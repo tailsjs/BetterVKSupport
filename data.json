@@ -1,5 +1,6 @@
 {
     "currentVersion": "1.2",
+    "versionNumber": 3,
     "baseDatabaseUri": "https://raw.githubusercontent.com/tailsjs/BetterVKSupport/database/",
     "nicknames": [
         "Сиделый",
@@ -29,5 +30,12 @@
         "images/3.jpg",
         "images/4.png",
         "images/5.jpg"
+    ],
+    "reserveAvatars": [
+        "https://i.imgur.com/g4oPajB.jpg",
+        "https://i.imgur.com/jcE4fQo.jpg",
+        "https://i.imgur.com/bHniXro.jpg",
+        "https://i.imgur.com/hUlArUX.png",
+        "https://i.imgur.com/xPYpRBm.jpg"
     ]
 }
